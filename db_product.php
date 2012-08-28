@@ -13,13 +13,13 @@ class db_product extends ybModel
         array(  
              'type' => 'hasone',   // 关联类型，这里是一对一关联  
             'map' => 'company',    // 关联的标识  
-             'mapkey' => 'campany_id', // 本表与对应表关联的字段名  
-             'fclass' => 'campany', // 对应表的类名  
+             'mapkey' => 'company_id', // 本表与对应表关联的字段名  
+             'fclass' => 'db_company', // 对应表的类名  
             'fkey' => 'id',    // 对应表中关联的字段名
 			//'field'=>'',//你要限制的字段     
             'enabled' => true     // 启用关联  
         ), 
-		 array(  
+		/* array(  
              'type' => 'hasmany',   // 关联类型，这里是一对多关联  
             'map' => 'blog_product',    // 关联的标识  
              'mapkey' => 'id', // 本表与对应表关联的字段名  
@@ -27,8 +27,8 @@ class db_product extends ybModel
             'fkey' => 'product_id',    // 对应表中关联的字段名
 			//'condition'=>'`uid` = uid',
 			//'field'=>'uid',//你要限制的字段     
-            'enabled' => true     // 启用关联  
-        ), 
+            'enabled' => false     // 启用关联 
+        ),  */
 		  
     ); 
     

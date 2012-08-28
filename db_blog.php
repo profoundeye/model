@@ -31,14 +31,15 @@ class db_blog extends ybModel
         ), 
 		  array(  
              'type' => 'hasmany',   // 关联类型，这里是一对一关联 关联产品库  
-            'map' => 'product_blog',    // 关联的标识  
+            'map' => 'blog_product',    // 关联的标识  
              'mapkey' => 'bid', // 本表与对应表关联的字段名  
-             'fclass' => 'product_blog', // 对应表的类名  
+             'fclass' => 'db_blog_product', // 对应表的类名  
             'fkey' => 'blog_id',    // 对应表中关联的字段名
 			//'condition'=>'`uid` = uid',
 			//'field'=>'uid',//你要限制的字段     
             'enabled' => true     // 启用关联  
-        ),
+        )
+
 
     ); 
     
