@@ -31,8 +31,21 @@ class db_product extends ybModel
         ),  */
 		  
     ); 
-    
 	
-	
+	var $verifier = array(
+                 "rules" => array( // 规则
+                        'info' => array(  // 这里是对username的验证规则
+                                'notnull' => TRUE, // username不能为空
+                                'maxlength' => 144, // username长度不能大于12
+                        ),
+                        'style' => array(   // 这里是对email的验证规则
+                                'notnull' => TRUE, // email不能为空
+                        ),                       
+			'year' => array(   // 这里是对email的验证规则
+                                'notnull' => TRUE, // email不能为空
+                                'istime' => TRUE,   // 必须要是电子邮件格式
+                        ),
+                ),
+        );
 }
 ?>
