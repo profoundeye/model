@@ -31,6 +31,16 @@ class db_tags extends ybModel
 		  
     );  
 	*/
+	
+	//获取tag
+	function getBlogTags($bid){
+		$row = $this->findAll(array("bid"=>$bid),"","title");
+		foreach ($row as $v) {
+			$temp[] = $v['title'];
+		}
+
+		return join(",",$temp);
+	}
     
     //对tag进行差异处理
 	function tagCreate($tag,$bid,$uid){
@@ -45,7 +55,6 @@ class db_tags extends ybModel
 		$ready_del = array_diff($old_tag,$now_tag); //要删除的
 		$ready_add = array_diff($now_tag,$old_tag); //要添加的
 
-
 		
 		if(!empty($ready_del)){
 			foreach($ready_del as $d){
@@ -55,8 +64,8 @@ class db_tags extends ybModel
 		if(!empty($ready_add)){
 			  foreach($ready_add as $d){
 					if($d != ''){
-						if(!$this->find(array('title'=>$d, 'bid'=>$bid, 'uid'=>$uid))){
-							$this->create(array('title'=>$d, 'bid'=>$bid, 'uid'=>$uid));
+						if(!$this->find(array('title'=>$d, 'bid'=>$bid, 'uid'=>$uid))){						
+								$this->create(array('title'=>$d, 'bid'=>$bid, 'uid'=>$uid));							
 						}
 					}
 				}
