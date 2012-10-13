@@ -32,7 +32,7 @@ class db_tag_system extends ybModel
 			$blogobj = spClass('db_blog');
 			if(!empty($result)){
 				foreach($result as $d){
-					if($ret = $blogobj->spLinker()->find(array('bid'=>$d['bid']))){
+					if($ret = $blogobj->spLinker()->find(array('bid'=>$d['bid']),"bid desc")){
 						$blog[] = $ret;
 					}
 				}
