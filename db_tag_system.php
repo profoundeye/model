@@ -26,8 +26,8 @@ class db_tag_system extends ybModel
 			$data['currtid'] = $ret['id'];
 
 			$thispage = ($args['page']) ? $args['page'] : 1;
-			$result = spClass('db_tags')->spPager($thispage,15)->findAll(array('title'=>$ret['name']));
-		
+			$result = spClass('db_tags')->spPager($thispage,15)->findAll(array('title'=>$ret['name']),"bid desc");
+		//print_r($result);exit;
 			$blog = array();
 			$blogobj = spClass('db_blog');
 			if(!empty($result)){
