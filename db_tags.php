@@ -183,6 +183,11 @@ $rs = $this->findSql($sql);
 			}
 		}
 	}
+	
+	function getArticleFromTag($tag){
+		$rs = $this->findAll(array("title"=>$tag),"","bid");
+		return $rs;
+	}
 
 
 }

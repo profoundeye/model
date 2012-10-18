@@ -19,7 +19,7 @@ class db_tag_system extends ybModel
 		}
 		//找到系统标签
 		$ret = $this->find($where);
-		
+
 		if($ret){
 			$data['topic_count'] = $ret['num'];
 			$data['currtag'] = $ret['name'];
