@@ -17,8 +17,79 @@ class db_source extends ybModel
         ), 		  
     ); 
 	
-	function getSource($uid){
+	function route($style,$info=""){
+		switch ($style) {
+			case 'comment':
+				$this->commentMe();
+				$this->commentArticle($info['bid']);
+				$this->commentAt($info['repuid']);
+				
+				break;
+			
+			default:
+				
+				break;
+		}
+	}
+	
+	//给回复发表者加分
+	function commentMe(){
+		$_uid = $_SESSION['user']['uid'];
+		$_source = 1;
+		$_type='发表留言，给自己加分';
+		if(!$this->limitSrouce($_uid)){
+			$this->getSource($_uid,$_source,$_type);
+			$this->sourceNotice($_uid,"积分通知","获得回复积分1z");
+		}
+	}
+	
+	//是否有被@者，给@者加分
+	function commentAt($_uid){
+		if(empty($_uid))return;
+		$_source = 1;
+		$_type='和朋友互动,对方给予积分';
+		if($_uid&&$_uid!=$_SESSION['user']['uid']){
+			$this->getSource($_uid,$_source,$_type);
+			$this->sourceNotice($_uid,"积分通知","和人互动，您获得对方给予的积分1z");
+		}
 		
+	}
+	
+	//给文章发表者加分
+	function commentArticle($bid){
+		$rs = spClass("db_blog")->find(array("bid"=>$bid));
+		//print_r($rs);exit;
+		$_uid = $rs["uid"];
+		$_source = 2;
+		$_type = '有人评论我的文章';
+		if($_uid&&$_uid!=$_SESSION['user']['uid']){
+			$this->getSource($_uid,$_source,$_type);
+			$this->sourceNotice($_uid,"积分通知","有人评论您的文章，您获得积分1z");
+		}
+	}
+	
+	function getSource($uid,$source,$type){
+		$data = array(
+			"user_id"=>$uid,
+			"source"=>$source,
+			//"time"=>DateTime(),
+			"type"=>$type,
+		);
+		$this->create($data);
+	}
+	
+	function limitSrouce($uid){
+		$limitType = array("'发表留言，给自己加分'","'发表新文章'");
+		$sql = "select sum(source) as sum from ".DBPRE."source where user_id=".$uid." and time>'".date("Y-m-d")." 00:00:00' and time<'".date("Y-m-d")." 23:59:59' and type in (".join($limitType,",").")";                           
+		$rs = $this->findsql($sql);
+		//print_r($rs);exit;
+		if($rs[0]["sum"]>10){
+			return false;
+		}
+	}
+	
+	function sourceNotice($foruid,$title,$info){		
+		spClass("db_notice")->create(array('uid'=>0,'sys'=>2,'foruid'=>$foruid,'title'=>$title,'info'=>$info,'location'=>'','time'=>time()));
 	}
 }
 ?>

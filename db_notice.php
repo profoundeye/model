@@ -261,5 +261,6 @@ class db_notice extends ybModel
 		$file = $GLOBALS['G_SP']['sp_cache'] .'/'. 'mailLog.log';
 		file_put_contents($file,$log,'FILE_APPEND');
 	}
+	
 }
 ?>
