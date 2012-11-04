@@ -64,7 +64,7 @@ class db_source extends ybModel
 		$_type = '有人评论我的文章';
 		if($_uid&&$_uid!=$_SESSION['user']['uid']){
 			$this->getSource($_uid,$_source,$_type);
-			$this->sourceNotice($_uid,"积分通知","有人评论您的文章，您获得积分1z");
+			$this->sourceNotice($_uid,"积分通知","有人评论您的文章，您获得积分2z");
 		}
 	}
 	
