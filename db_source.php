@@ -30,6 +30,7 @@ class db_source extends ybModel
 				
 				break;
 		}
+		$this->sumSource($_SESSION['user']['uid']);
 	}
 	
 	//给回复发表者加分
@@ -90,6 +91,15 @@ class db_source extends ybModel
 	
 	function sourceNotice($foruid,$title,$info){		
 		spClass("db_notice")->create(array('uid'=>0,'sys'=>2,'foruid'=>$foruid,'title'=>$title,'info'=>$info,'location'=>'','time'=>time()));
+	}
+	
+	function sumSource($uid){
+		$sql = "select sum(source) as sum from  ".DBPRE."source where user_id=".$uid."";
+		$rs = $this->findSql($sql);
+		if(!$rs[0]["sum"])$rs[0]["sum"]=0;
+		$data = spClass("db_member")->updateField(array("uid"=>$uid),"source",$rs[0]["sum"]);
+		$_SESSION["user"]['source']= $rs[0]["sum"];
+		//print_r($data);exit;
 	}
 }
 ?>
