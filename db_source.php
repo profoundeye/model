@@ -30,12 +30,12 @@ class db_source extends ybModel
 				
 				break;
 		}
-		$this->sumSource($_SESSION['user']['uid']);
+		$this->sumSource($_SESSION['uid']);
 	}
 	
 	//给回复发表者加分
 	function commentMe(){
-		$_uid = $_SESSION['user']['uid'];
+		$_uid = $_SESSION['uid'];
 		$_source = 1;
 		$_type='发表留言，给自己加分';
 		if(!$this->limitSrouce($_uid)){
@@ -49,7 +49,7 @@ class db_source extends ybModel
 		if(empty($_uid))return;
 		$_source = 1;
 		$_type='和朋友互动,对方给予积分';
-		if($_uid&&$_uid!=$_SESSION['user']['uid']){
+		if($_uid&&$_uid!=$_SESSION['uid']){
 			$this->getSource($_uid,$_source,$_type);
 			$this->sourceNotice($_uid,"积分通知","和人互动，您获得对方给予的积分1z");
 		}
@@ -63,7 +63,7 @@ class db_source extends ybModel
 		$_uid = $rs["uid"];
 		$_source = 2;
 		$_type = '有人评论我的文章';
-		if($_uid&&$_uid!=$_SESSION['user']['uid']){
+		if($_uid&&$_uid!=$_SESSION['uid']){
 			$this->getSource($_uid,$_source,$_type);
 			$this->sourceNotice($_uid,"积分通知","有人评论您的文章，您获得积分2z");
 		}
