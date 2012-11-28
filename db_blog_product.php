@@ -15,5 +15,17 @@ class db_blog_product extends spModel
 	            'enabled' => true     // 启用关联  
 	        )
         );
+		
+		function save($blog_id="",$pid=""){
+			if(empty($blog_id)){$this->spArgs('blog_id');}
+			if(empty($pid)){$this->spArgs('pid');}
+			//删除原始关联
+			$this->delete(array("blog_id"=>$blog_id));
+			//保存新关联数据
+			$newData = array();
+	
+			$newData=array("blog_id"=>$blog_id,"product_id"=>$pid);
+			$this->create($newData);
+		}
 }
 ?>
