@@ -40,7 +40,7 @@ class db_source extends ybModel
 		$_type='发表留言，给自己加分';
 		if(!$this->limitSrouce($_uid)){
 			$this->getSource($_uid,$_source,$_type);
-			$this->sourceNotice($_uid,"积分通知","获得回复积分1z");
+			$this->sourceNotice($_uid,"积分通知","发表留言，给自己加分:获得回复1z");
 		}
 	}
 	
@@ -51,7 +51,7 @@ class db_source extends ybModel
 		$_type='和朋友互动,对方给予积分';
 		if($_uid&&$_uid!=$_SESSION['uid']){
 			$this->getSource($_uid,$_source,$_type);
-			$this->sourceNotice($_uid,"积分通知","和人互动，您获得对方给予的积分1z");
+			$this->sourceNotice($_uid,"积分通知","被@，您获得对方给予的积分1z");
 		}
 		
 	}
@@ -63,9 +63,10 @@ class db_source extends ybModel
 		$_uid = $rs["uid"];
 		$_source = 2;
 		$_type = '有人评论我的文章';
+		$location = "blog|".$bid;
 		if($_uid&&$_uid!=$_SESSION['uid']){
 			$this->getSource($_uid,$_source,$_type);
-			$this->sourceNotice($_uid,"积分通知","有人评论您的文章，您获得积分2z");
+			$this->sourceNotice($_uid,"积分通知","评论您的文章，您获得积分2z",1,$_SESSION['uid'],$location);
 		}
 	}
 	
@@ -89,8 +90,8 @@ class db_source extends ybModel
 		}
 	}
 	
-	function sourceNotice($foruid,$title,$info){		
-		spClass("db_notice")->create(array('uid'=>0,'sys'=>2,'foruid'=>$foruid,'title'=>$title,'info'=>$info,'location'=>'','time'=>time()));
+	function sourceNotice($foruid,$title,$info,$sys=2,$uid=0,$location=''){		
+		spClass("db_notice")->create(array('uid'=>$uid,'sys'=>$sys,'foruid'=>$foruid,'title'=>$title,'info'=>$info,'location'=>$location,'time'=>time()));
 	}
 	
 	function sumSource($uid){
