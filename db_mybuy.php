@@ -22,6 +22,32 @@ class db_mybuy extends ybModel
 		  
     );  
 	
+	//根据昵称返回标签列表
+	function returnUserTags($n){
+		$db = spClass("db_memberex");
+		$rs = $db->find(array('name'=>$n));
+		$uid = $rs['uid'];
+		$db = spClass("db_product_tag_user");
+			$rs = $db->spLinker()->findAll(array("user_id"=>$uid),"tag_id desc","");
+			$temp = array();
+			foreach($rs as $r){				
+				if($r['product_id']<0){
+					$temp[] = array("tag"=>$r['producttags'][0][tag],"tagId"=>$r['tag_id']);
+				}
+			}
+			return $temp;
+	}
+	//根据标签id返回全部商品
+	function returnTagGoods($id){
+		$db = spClass("db_product_tag_user");
+		$rs = $db->findAll(array('tag_id'=>$id),"","product_id");
+		foreach($rs as $r){
+			$t[] = $r['product_id'];
+		}
+		$ids = join(",",array_map("showReal",$t));
+		$rs = $this->findAll("id in ($ids)");
+		return $rs;
+	}
 	
 
 }
