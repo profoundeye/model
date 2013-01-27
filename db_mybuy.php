@@ -32,9 +32,10 @@ class db_mybuy extends ybModel
 			$temp = array();
 			foreach($rs as $r){				
 				if($r['product_id']<0){
-					$temp[] = array("tag"=>$r['producttags'][0][tag],"tagId"=>$r['tag_id']);
+					$temp[$r['tag_id']] = array("tag"=>$r['producttags'][0][tag],"tagId"=>$r['tag_id']);
 				}
 			}
+
 			return $temp;
 	}
 	//根据标签id返回全部商品
