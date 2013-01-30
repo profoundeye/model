@@ -22,7 +22,7 @@ class db_member extends ybModel
 	);
 	
 	//连接登陆的验证 没有验证码的
-	var $verifier_openConnect_Login  = array(  
+	var $verifier_openConnect_Login  = array(
        "rules" => array( 
            'email' => array(  
                'notnull' => TRUE, // username不能为空  
@@ -43,7 +43,7 @@ class db_member extends ybModel
               'minlength' => "邮箱不能少于5个字符", 
               'maxlength' => "邮箱不能大于50个字符",  
 			  'email'=>'请输入正确的邮箱',
-			  'isopen'    =>'账号被限制访问',
+			  'isopen'    =>'邮箱好像不对',
             ), 
 			  'password' => array(  
               'notnull' => "密码不能为空",  
@@ -195,6 +195,7 @@ class db_member extends ybModel
 			$_SESSION['openconnect'][$d['types']]['openid'] = $d['openid'];
 			$_SESSION['openconnect'][$d['types']]['token'] = $d['token'];
 			$_SESSION['openconnect'][$d['types']]['secret'] = $d['secret'];
+			$_SESSION['openconnect'][$d['types']]['name'] = $d['name'];
 		}
 	}
 	

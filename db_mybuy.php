@@ -13,10 +13,10 @@ class db_mybuy extends ybModel
 	var $linker = array(  
         array(  
              'type' => 'hasone',   // 关联类型，这里是一对一关联  
-            'map' => 'tag',    // 关联的标识  
-             'mapkey' => 'tagid', // 本表与对应表关联的字段名  
-             'fclass' => 'db_tags', // 对应表的类名  
-            'fkey' => 'tid',    // 对应表中关联的字段名
+            'map' => 'product',    // 关联的标识  
+             'mapkey' => 'pid', // 本表与对应表关联的字段名  
+             'fclass' => 'db_product', // 对应表的类名  
+            'fkey' => 'id',    // 对应表中关联的字段名
             'enabled' => true     // 启用关联  
         ), 
 		  
@@ -50,6 +50,36 @@ class db_mybuy extends ybModel
 		return $rs;
 	}
 	
+	function detail($id){
+		$rs = $this->find(array("id"=>$id));
+		$pid = $rs['pid'];
+		if($pid){
+			$db = spClass("db_product");
+			$rs['product'] = $db->spLinker()->find(array("pid"=>$pid));
+		}
+
+		return $rs;
+	}
+	
+	function inputUrl($id,$url,$weiboId){
+		$rs = $this->find(array("id"=>$id));
+		if(!$rs['pid']){
+			//create new product
+			$db = spClass("db_product");
+			$data=array("company"=>"","year"=>'',"style"=>'',"info"=>"","buy_url"=>$url);
+			$pid = $db->create($data);
+			//update url,pid
+			$this->update(array("id"=>$id), array("pid"=>$pid));
+		}else{
+			$db = spClass("db_product");
+			$data=array("buy_url"=>$url);
+			$db->update(array("id"=>$rs['pid']),$data);
+		}
+		$db = spClass("db_alertBuy");
+		$db->done($weiboId);
+		
+
+	}
 
 }
 ?>
