@@ -16,7 +16,7 @@ class db_alertBuy extends ybModel
 			$row = array("times"=>$rs['times']+1,"detailId"=>$detailId);
 			$this->update(array("weiboId"=>$buyId), $row);
 		}else{
-			$row = array("times"=>1,"weiboId"=>$buyId);
+			$row = array("times"=>1,"weiboId"=>$buyId,"detailId"=>$detailId);
 			$this->create($row);
 		}		
 	}
