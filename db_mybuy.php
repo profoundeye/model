@@ -55,7 +55,7 @@ class db_mybuy extends ybModel
 		$pid = $rs['pid'];
 		if($pid){
 			$db = spClass("db_product");
-			$rs['product'] = $db->spLinker()->find(array("pid"=>$pid));
+			$rs['product'] = $db->spLinker()->find(array("id"=>$pid));
 		}
 
 		return $rs;
