@@ -8,7 +8,7 @@
 class db_alertBuy extends ybModel  
 {
 	var $pk = "id"; //主键  
-	var $table = "alertBuy"; // 数据表的名称 
+	var $table = "alertbuy"; // 数据表的名称 
 	
 	function newAlert($buyId,$detailId){
 		$rs = $this->find(array("weiboId"=>$buyId));
