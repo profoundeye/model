@@ -42,11 +42,12 @@ class db_mybuy extends ybModel
 	function returnTagGoods($id){
 		$db = spClass("db_product_tag_user");
 		$rs = $db->findAll(array('tag_id'=>$id),"","product_id");
+
 		foreach($rs as $r){
 			$t[] = $r['product_id'];
 		}
 		$ids = join(",",array_map("showReal",$t));
-		$rs = $this->findAll("id in ($ids)");
+		$rs = $this->findAll("id in ($ids)","time desc");		
 		return $rs;
 	}
 	

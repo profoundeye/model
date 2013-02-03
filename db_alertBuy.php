@@ -11,12 +11,14 @@ class db_alertBuy extends ybModel
 	var $table = "alertbuy"; // 数据表的名称 
 	
 	function newAlert($buyId,$detailId){
-		$rs = $this->find(array("weiboId"=>$buyId));
+		//用户身份
+		$uid = $_SESSION['uid']?$_SESSION['uid']:"0";
+		$rs = $this->find(array("weiboId"=>$buyId,"uid"=>$uid));
 		if($rs){
 			$row = array("times"=>$rs['times']+1,"detailId"=>$detailId);
-			$this->update(array("weiboId"=>$buyId), $row);
+			$this->update(array("weiboId"=>$buyId,"uid"=>$uid), $row);
 		}else{
-			$row = array("times"=>1,"weiboId"=>$buyId,"detailId"=>$detailId);
+			$row = array("times"=>1,"weiboId"=>$buyId,"detailId"=>$detailId,"uid"=>$uid);
 			$this->create($row);
 		}		
 	}

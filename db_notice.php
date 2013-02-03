@@ -262,5 +262,14 @@ class db_notice extends ybModel
 		file_put_contents($file,$log,'FILE_APPEND');
 	}
 	
+	
+	function buyAlertNotice($detailId){
+		$db = spClass("db_alertBuy");
+		$rs =$db->findSql("select * from ".DBPRE."alertbuy where uid<>'' and detailId=".$detailId." ");
+		foreach ($rs as $k => $r) {
+			$data=array('uid'=>$_SESSION['uid'],'sys'=>2,'foruid'=>$r["uid"],'title'=>"购买地址提醒",'info'=>"您关注的好玩，有购买地址更新了,<a href='".spUrl("mybuy",'detail',array("id"=>$detailId))."'>点击查看</a>",'location'=>" ",'time'=>time());
+			$this->create($data);
+		}
+	}
 }
 ?>
