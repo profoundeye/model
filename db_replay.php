@@ -52,9 +52,9 @@ class db_replay extends ybModel
 		$msg = strip_tags(strreplaces($row['inputs']));
 
 		$rs = spClass('db_blog')->find(array('bid'=>$row['bid']),'','uid,noreply');
-		if(!$rs){$err['err'] = '回复的主题不存在';return $err;}
+		if(!$rs&&$row['bid']>0){$err['err'] = '回复的主题不存在';return $err;}
 		if($msg == '') {$err['err'] = '回复的内容不能为空'; return $err;}
-		if($rs['noreply'] == 1) { $err['err'] = '该内容作者不允许评论';return $err;}
+		if($rs['noreply'] == 1&&isset($rs['noreply'])) { $err['err'] = '该内容作者不允许评论';return $err;}
 		
 		if( $GLOBALS['YB']['keep_rep'] != '')
 		{
