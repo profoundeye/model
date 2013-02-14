@@ -43,7 +43,35 @@ class db_replay extends ybModel
 
 		  
     );  
-	
+	function createReplayFromSina($row){
+		//是否已经有重复记录
+		$rs = $this->find(array("msg"=>$row['msg']));
+		if($rs){
+			return;}
+		//查到bid（mybuydetail id）
+		$db = spClass("db_mybuy");
+		$rs = $db->find(array("weiboid"=>$row['weiboId']));
+		$bid=$rs['id']*-1;
+		//查userid
+		$db = spClass("db_memberex");
+		$rs = $db->find(array("name"=>$row["creater"]));
+		$uid=$rs['uid']?$rs['uid']:0;
+		//forid
+		preg_match('/\@(.*?)\:/',$row['msg'],$msgs); 
+		if($msgs[1]){
+			$rs = $db->find(array("name"=>$msgs[1]));
+			$repuid=$rs['uid']?$rs['uid']:null;	
+		}
+		//插入数据
+		$data = array('bid'=>$bid,'msg'=>$row['msg'],'uid'=>$uid,'repuid'=>$repuid,'time'=>time());
+		
+		$parent_key = $this->create($data);
+		
+		if($repuid != ''){
+			spClass('db_notice')->noticeReplay(array('foruid'=>$repuid,'bid'=>$bid),'回复了您',$row['msg']);	  //给@发一个通知
+		}
+
+	}
 
 	/*添加一个回复*/
 	function createReplay($row)
