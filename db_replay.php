@@ -68,7 +68,7 @@ class db_replay extends ybModel
 		$parent_key = $this->create($data);
 		
 		if($repuid != ''){
-			spClass('db_notice')->noticeReplay(array('foruid'=>$repuid,'bid'=>$bid),'回复了您',$row['msg']);	  //给@发一个通知
+			spClass('db_notice')->noticeReplay(array('foruid'=>$repuid,'bid'=>$bid),'回复了您',$row['msg'],$uid);	  //给@发一个通知
 		}
 
 	}

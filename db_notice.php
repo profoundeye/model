@@ -25,10 +25,11 @@ class db_notice extends ybModel
     );  
 
 	/*评论回复列表*/
-	function noticeReplay($row,$title,$msg='')
+	function noticeReplay($row,$title,$msg='',$uid="")
 	{
-		$this->create(array('uid'=>$_SESSION['uid'],'sys'=>'1','foruid'=>$row['foruid'],'title'=>$title,'info'=>$msg,'time'=>time(),'location'=>'blog|'.$row['bid'],'time'=>time()));
-		$this->sendReplay($_SESSION['uid'],$row['foruid'],$msg,$row['bid']);
+		$uid=$uid?$uid:$_SESSION['uid'];
+		$this->create(array('uid'=>$uid,'sys'=>'1','foruid'=>$row['foruid'],'title'=>$title,'info'=>$msg,'time'=>time(),'location'=>'blog|'.$row['bid'],'time'=>time()));
+		$this->sendReplay($uid,$row['foruid'],$msg,$row['bid']);
 	}
 
 	/*关注通知*/
