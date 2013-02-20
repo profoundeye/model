@@ -43,11 +43,25 @@ class db_replay extends ybModel
 
 		  
     );  
+	
+	function isReplay($msg){
+		if(stripos($msg,"【正玩】")){
+			return true;
+		};
+		if(stripos($msg,"已记录")){
+			return true;
+		};
+		$rs = $this->find(array("msg"=>$msg));
+		if($rs){
+			return true;
+		}
+		return false;
+	}
+	
 	function createReplayFromSina($row){
 		//是否已经有重复记录
-		$rs = $this->find(array("msg"=>$row['msg']));
-		if($rs){
-			return;}
+		if($this->isReplay($row['msg'])){return false;}
+		
 		//查到bid（mybuydetail id）
 		$db = spClass("db_mybuy");
 		$rs = $db->find(array("weiboid"=>$row['weiboId']));
