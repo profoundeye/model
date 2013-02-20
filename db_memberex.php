@@ -38,5 +38,13 @@ class db_memberex extends ybModel
 		return $data;
 	}
 	
+	function is_memberex($name){
+		$rs = $this->find(array("name"=>$name));
+		if($rs){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
 ?>
