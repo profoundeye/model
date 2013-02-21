@@ -78,9 +78,15 @@ class db_mybuy extends ybModel
 		}
 		$db = spClass("db_alertBuy");
 		$db->done($weiboId);
-		
-
 	}
-
+	
+	function updateReplay($id){
+		$_id = $id*-1;
+		$db = spClass("db_replay");
+		$sql = "select count(*) as sum from ".DBPRE."replay where bid=".$id;
+		$rs =$db->findSql($sql);
+		if($rs[0]['sum'])
+		$this->update(array("id"=>$_id), array("replay"=>$rs[0]['sum']));
+	}
 }
 ?>

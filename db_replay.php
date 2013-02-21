@@ -48,6 +48,9 @@ class db_replay extends ybModel
 		if(stripos($msg,"【正玩】")){
 			return true;
 		};
+		if(stripos($msg,"[正玩]")){
+			return true;
+		};
 		if(stripos($msg,"已记录")){
 			return true;
 		};
@@ -79,7 +82,10 @@ class db_replay extends ybModel
 		//插入数据
 		$data = array('bid'=>$bid,'msg'=>$row['msg'],'uid'=>$uid,'repuid'=>$repuid,'time'=>time());
 		
-		$parent_key = $this->create($data);
+		//$parent_key = $this->create($data);
+		
+		//更新回复数
+		spClass("db_mybuy")->updateReplay($bid);
 		
 		if($repuid != ''){
 			spClass('db_notice')->noticeReplay(array('foruid'=>$repuid,'bid'=>$bid),'回复了您',$row['msg'],$uid);	  //给@发一个通知
