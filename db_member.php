@@ -69,7 +69,7 @@ class db_member extends ybModel
             ),
 			'username'=>array(
 			 'minlength' => 2,  // username长度不能小于2  
-			 'maxlength' => 10, // username长度不能大于 
+			 'maxlength' => 15, // username长度不能大于 
 		     'ninameused' => TRUE,
 			),
 		    'password2' => array(  
