@@ -82,7 +82,7 @@ class db_replay extends ybModel
 		//插入数据
 		$data = array('bid'=>$bid,'msg'=>$row['msg'],'uid'=>$uid,'repuid'=>$repuid,'time'=>time());
 		
-		//$parent_key = $this->create($data);
+		$parent_key = $this->create($data);
 		
 		//更新回复数
 		spClass("db_mybuy")->updateReplay($bid);
