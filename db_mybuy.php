@@ -19,7 +19,14 @@ class db_mybuy extends ybModel
             'fkey' => 'id',    // 对应表中关联的字段名
             'enabled' => true     // 启用关联  
         ), 
-		  
+		array(
+			'type' => 'hasmany',   // 关联类型，这里是一对一关联  
+            'map' => 'mybuy_extend',    // 关联的标识  
+             'mapkey' => 'id', // 本表与对应表关联的字段名  
+             'fclass' => 'db_mybuy_extend', // 对应表的类名  
+            'fkey' => 'mybuy_id',    // 对应表中关联的字段名
+            'enabled' => true     // 启用关联  
+		)
     );  
 	
 	//根据昵称返回标签列表
@@ -58,7 +65,8 @@ class db_mybuy extends ybModel
 			$db = spClass("db_product");
 			$rs['product'] = $db->spLinker()->find(array("id"=>$pid));
 		}
-
+		$db = spClass("db_mybuy_extend");
+		$rs['pics'] = $db->findAll(array("mybuy_id"=>$id));
 		return $rs;
 	}
 	
