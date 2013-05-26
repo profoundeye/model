@@ -60,6 +60,7 @@ class db_mybuy extends ybModel
 	
 	function detail($id){
 		$rs = $this->find(array("id"=>$id));
+		//print_r($rs);exit;
 		$pid = $rs['pid'];
 		if($pid){
 			$db = spClass("db_product");
@@ -67,6 +68,8 @@ class db_mybuy extends ybModel
 		}
 		$db = spClass("db_mybuy_extend");
 		$rs['pics'] = $db->findAll(array("mybuy_id"=>$id));
+		if(!$rs['pics']){$rs['pics'][0]['url'] =$rs['pic'];}
+		//print_r($rs);exit;
 		return $rs;
 	}
 	
